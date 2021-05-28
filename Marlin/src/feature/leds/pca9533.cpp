@@ -67,7 +67,7 @@ void PCA9533_set_rgb(uint8_t red1, uint8_t green1, uint8_t blue1) {
   uint8_t r_pwm0 = 0; // Register data - PWM value
   uint8_t r_pwm1 = 0; // Register data - PWM value
 
-  //Invert colours
+//Invert colours
   uint8_t red = map(red1, 0, 255, 255, 0);
   uint8_t green = map(green1, 0, 255, 255, 0);
   uint8_t blue = map(blue1, 0, 255, 255, 0);
