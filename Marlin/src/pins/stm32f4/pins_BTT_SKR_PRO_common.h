@@ -77,8 +77,8 @@
     #define X_MIN_PIN                       PE15  // E0
   #endif
 #else
-  #define X_MIN_PIN                         PB10  // X-
-  #define X_MAX_PIN                         PE15  // E0
+  #define X_MIN_PIN                         PE15  // X-
+  #define X_MAX_PIN                         PB10  // E0
 #endif
 
 #ifdef Y_STALL_SENSITIVITY
