@@ -34,7 +34,6 @@
 void PCA9533_init() {
   Wire.begin();
   PCA9533_reset();
-  PCA9533_set_rgb(0, 0, 0);
 }
 
 static void PCA9533_writeAllRegisters(uint8_t psc0, uint8_t pwm0, uint8_t psc1, uint8_t pwm1, uint8_t ls0){
@@ -63,26 +62,21 @@ void PCA9533_setOff() {
   PCA9533_writeRegister(PCA9533_REG_SEL, 0);
 }
 
-void PCA9533_set_rgb(uint8_t red1, uint8_t green1, uint8_t blue1) {
+void PCA9533_set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
   uint8_t r_pwm0 = 0; // Register data - PWM value
   uint8_t r_pwm1 = 0; // Register data - PWM value
-
-//Invert colours
-  uint8_t red = map(red1, 0, 255, 255, 0);
-  uint8_t green = map(green1, 0, 255, 255, 0);
-  uint8_t blue = map(blue1, 0, 255, 255, 0);
 
   uint8_t op_g = 0, op_r = 0, op_b = 0; // Opcodes - Green, Red, Blue
 
   // Light theory! GREEN takes priority because
   // it's the most visible to the human eye.
-       if (green ==   255)  op_g = PCA9533_LED_OP_OFF;
-  else if (green == 0)  op_g = PCA9533_LED_OP_ON;
+       if (green ==   0)  op_g = PCA9533_LED_OP_OFF;
+  else if (green == 255)  op_g = PCA9533_LED_OP_ON;
   else { r_pwm0 = green;  op_g = PCA9533_LED_OP_PWM0; }
 
   // RED
-       if (red ==   255)    op_r = PCA9533_LED_OP_OFF;
-  else if (red == 0)    op_r = PCA9533_LED_OP_ON;
+       if (red ==   0)    op_r = PCA9533_LED_OP_OFF;
+  else if (red == 255)    op_r = PCA9533_LED_OP_ON;
   else if (r_pwm0 == 0 || r_pwm0 == red) {
          r_pwm0 = red;    op_r = PCA9533_LED_OP_PWM0;
   }
@@ -91,8 +85,8 @@ void PCA9533_set_rgb(uint8_t red1, uint8_t green1, uint8_t blue1) {
   }
 
   // BLUE
-       if (blue ==   255)   op_b = PCA9533_LED_OP_OFF;
-  else if (blue == 0)   op_b = PCA9533_LED_OP_ON;
+       if (blue ==   0)   op_b = PCA9533_LED_OP_OFF;
+  else if (blue == 255)   op_b = PCA9533_LED_OP_ON;
   else if (r_pwm0 == 0 || r_pwm0 == blue) {
          r_pwm0 = blue;   op_b = PCA9533_LED_OP_PWM0;
   }
